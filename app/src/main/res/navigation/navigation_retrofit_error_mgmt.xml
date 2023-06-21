@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_retrofit_error_mgmt"
+    app:startDestination="@id/listPostFragment">
+
+    <fragment
+        android:id="@+id/listPostFragment"
+        android:name="com.android.android_dagger_hilt_example.presentation.fragment.ListPostFragment"
+        android:label="@string/retrofit_error_mgmt"
+        tools:layout="@layout/fragment_list_posts">
+        <action
+            android:id="@+id/action_listPostFragment_to_detailPostFragment"
+            app:destination="@id/detailPostFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailPostFragment"
+        android:name="com.android.android_dagger_hilt_example.presentation.fragment.DetailPostFragment"
+        android:label="@string/retrofit_error_mgmt"
+        tools:layout="@layout/fragment_detail_posts">
+
+        <argument
+            android:name="post"
+            app:argType="com.android.android_dagger_hilt_example.model.Post" />
+
+    </fragment>
+
+</navigation>
