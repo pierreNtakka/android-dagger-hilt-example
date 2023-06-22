@@ -13,8 +13,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListPostsViewModel @Inject constructor(private val getPostUseCase: GetPostUseCase) :
-    ViewModel() {
+class ListPostsViewModel @Inject constructor(
+    private val getPostUseCase: GetPostUseCase,
+) : ViewModel() {
 
     private val _dataFlow = MutableStateFlow<ListPostsState>(ListPostsState.Loading)
     val dataFlow = _dataFlow.asStateFlow()
@@ -22,7 +23,6 @@ class ListPostsViewModel @Inject constructor(private val getPostUseCase: GetPost
     init {
         fetchData()
     }
-
 
     fun fetchData() {
         viewModelScope.launch {
