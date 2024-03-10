@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace 'com.android.android_dagger_hilt_example'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.android.android_dagger_hilt_example"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -28,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_18
-        targetCompatibility JavaVersion.VERSION_18
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '18'
+        jvmTarget = '1.8'
     }
 
     // Allow references to generated code
@@ -49,9 +49,9 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
 
@@ -63,7 +63,7 @@ dependencies {
     //Reftrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
 
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
