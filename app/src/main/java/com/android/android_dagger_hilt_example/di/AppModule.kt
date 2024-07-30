@@ -2,6 +2,7 @@ package com.android.android_dagger_hilt_example.di
 
 import android.content.Context
 import com.android.android_dagger_hilt_example.AndroidHiltExampleApplication
+import com.android.android_dagger_hilt_example.BuildConfig
 import com.android.android_dagger_hilt_example.network.BaseOkHttpClient
 import com.android.android_dagger_hilt_example.presentation.uses_case.GetPostUseCase
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApi
@@ -66,7 +67,7 @@ object AppModule {
         ).getClient()
 
         return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl(BASE_URL).client(baseHttpClient).build().create(JsonPlaceholderApi::class.java)
+            .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL).client(baseHttpClient).build().create(JsonPlaceholderApi::class.java)
     }
 
     @Singleton
