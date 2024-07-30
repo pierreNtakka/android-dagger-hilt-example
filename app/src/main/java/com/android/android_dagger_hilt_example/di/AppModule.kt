@@ -6,12 +6,10 @@ import com.android.android_dagger_hilt_example.BuildConfig
 import com.android.android_dagger_hilt_example.network.BaseOkHttpClient
 import com.android.android_dagger_hilt_example.presentation.uses_case.GetPostUseCase
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApi
-import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApiConstant.BASE_URL
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApiConstant.CONNECT_TIMEOUT
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApiConstant.READ_TIMEOUT
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApiConstant.WRITE_TIMEOUT
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderRepository
-import com.android.android_dagger_hilt_example.repository.JsonPlaceholderRepositoryImpl
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -67,7 +65,8 @@ object AppModule {
         ).getClient()
 
         return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL).client(baseHttpClient).build().create(JsonPlaceholderApi::class.java)
+            .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL).client(baseHttpClient).build()
+            .create(JsonPlaceholderApi::class.java)
     }
 
     @Singleton
