@@ -21,7 +21,6 @@ class GetPostUseCase @Inject constructor(private val repository: JsonPlaceholder
                 is HttpException -> {
                     emit(Resource.Error(code = throwable.code(), message = throwable.message()))
                 }
-
                 else -> {
                     emit(Resource.Error())
                 }

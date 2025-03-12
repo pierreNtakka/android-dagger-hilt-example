@@ -40,11 +40,11 @@ class ListPostsViewModel @Inject constructor(
                     }
 
                     is Resource.ConnectionError -> {
-                        Log.d("TEST", "ConnectionError")
+                        _dataFlow.value = ListPostsState.Error
                     }
 
                     is Resource.Error -> {
-                        Log.d("TEST", "Error ${resource.code}")
+                        _dataFlow.value = ListPostsState.Error
                     }
                 }
             }

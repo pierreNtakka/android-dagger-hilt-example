@@ -63,7 +63,7 @@ class ListPostFragment : Fragment(), MenuProvider {
                             binding.recyclerViewPosts.isVisible = false
                         }
 
-                        ListPostsViewModel.ListPostsState.Error -> {
+                        is ListPostsViewModel.ListPostsState.Error -> {
                             binding.progressBar.isVisible = false
                             binding.recyclerViewPosts.isVisible = false
 
