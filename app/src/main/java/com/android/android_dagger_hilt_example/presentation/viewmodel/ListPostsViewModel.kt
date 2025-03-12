@@ -1,6 +1,5 @@
 package com.android.android_dagger_hilt_example.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.android_dagger_hilt_example.model.Post
@@ -56,7 +55,7 @@ class ListPostsViewModel @Inject constructor(
             createPostUseCase().collect { resource ->
                 when (resource) {
                     is Resource.Success -> {
-                        Log.d("TEST", "Success")
+                        fetchData()
                     }
 
                     is Resource.Loading -> {
@@ -64,11 +63,11 @@ class ListPostsViewModel @Inject constructor(
                     }
 
                     is Resource.ConnectionError -> {
-                        Log.d("TEST", "ConnectionError")
+                        _dataFlow.value = ListPostsState.Error
                     }
 
                     is Resource.Error -> {
-                        Log.d("TEST", "Error ${resource.code}")
+                        _dataFlow.value = ListPostsState.Error
                     }
                 }
             }
