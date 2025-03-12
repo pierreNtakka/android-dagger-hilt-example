@@ -1,7 +1,9 @@
 package com.android.android_dagger_hilt_example.repository
 
 import com.android.android_dagger_hilt_example.model.Post
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import javax.inject.Inject
 
 object JsonPlaceholderApiConstant {
@@ -15,8 +17,17 @@ interface JsonPlaceholderApi {
     suspend fun getPosts(): List<Post>
 }
 
+interface JsonPlaceholderEncypherApi {
+    @POST("/posts")
+    suspend fun createPost(@Body post: Post): Post
+}
+
 interface JsonPlaceholderRepository {
     suspend fun getPosts(): List<Post>
+}
+
+interface JsonPlaceholderEncypherRepository {
+    suspend fun createPost(post: Post): Post
 }
 
 class JsonPlaceholderRepositoryImpl @Inject constructor(
@@ -25,4 +36,15 @@ class JsonPlaceholderRepositoryImpl @Inject constructor(
 
     override suspend fun getPosts() = jsonPlaceholderApi.getPosts()
 }
+
+class JsonPlaceholderEncypherRepositoryImpl @Inject constructor(
+    private val jsonPlaceholderEncypherApi: JsonPlaceholderEncypherApi,
+) : JsonPlaceholderEncypherRepository {
+
+    override suspend fun createPost(post: Post): Post {
+        return jsonPlaceholderEncypherApi.createPost(post = post)
+    }
+}
+
+
 

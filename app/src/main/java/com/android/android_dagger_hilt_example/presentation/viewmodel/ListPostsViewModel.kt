@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.android_dagger_hilt_example.model.Post
 import com.android.android_dagger_hilt_example.network.Resource
+import com.android.android_dagger_hilt_example.presentation.uses_case.CreatePostUseCase
 import com.android.android_dagger_hilt_example.presentation.uses_case.GetPostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ListPostsViewModel @Inject constructor(
     private val getPostUseCase: GetPostUseCase,
+    private val createPostUseCase: CreatePostUseCase,
 ) : ViewModel() {
 
     private val _dataFlow = MutableStateFlow<ListPostsState>(ListPostsState.Loading)
@@ -49,10 +51,34 @@ class ListPostsViewModel @Inject constructor(
         }
     }
 
+    fun createPost() {
+        viewModelScope.launch {
+            createPostUseCase().collect { resource ->
+                when (resource) {
+                    is Resource.Success -> {
+                        Log.d("TEST", "Success")
+                    }
+
+                    is Resource.Loading -> {
+                        _dataFlow.value = ListPostsState.Loading
+                    }
+
+                    is Resource.ConnectionError -> {
+                        Log.d("TEST", "ConnectionError")
+                    }
+
+                    is Resource.Error -> {
+                        Log.d("TEST", "Error ${resource.code}")
+                    }
+                }
+            }
+        }
+    }
+
 
     sealed class ListPostsState {
         class Success(val list: List<Post>) : ListPostsState()
-
-        object Loading : ListPostsState()
+        data object Loading : ListPostsState()
+        data object Error : ListPostsState()
     }
 }

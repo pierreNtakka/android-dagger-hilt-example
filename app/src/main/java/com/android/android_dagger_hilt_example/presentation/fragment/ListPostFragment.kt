@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -61,9 +62,25 @@ class ListPostFragment : Fragment(), MenuProvider {
                             binding.progressBar.isVisible = true
                             binding.recyclerViewPosts.isVisible = false
                         }
+
+                        ListPostsViewModel.ListPostsState.Error -> {
+                            binding.progressBar.isVisible = false
+                            binding.recyclerViewPosts.isVisible = false
+
+                            Toast.makeText(
+                                this@ListPostFragment.context,
+                                "An Error was occurrend",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
                     }
                 }
             }
+        }
+
+        binding.fab.setOnClickListener {
+            viewModel.createPost()
         }
 
     }

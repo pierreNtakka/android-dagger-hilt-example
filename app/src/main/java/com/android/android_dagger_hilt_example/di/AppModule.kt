@@ -4,12 +4,11 @@ import android.content.Context
 import com.android.android_dagger_hilt_example.AndroidHiltExampleApplication
 import com.android.android_dagger_hilt_example.BuildConfig
 import com.android.android_dagger_hilt_example.network.BaseOkHttpClient
-import com.android.android_dagger_hilt_example.presentation.uses_case.GetPostUseCase
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApi
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApiConstant.CONNECT_TIMEOUT
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApiConstant.READ_TIMEOUT
 import com.android.android_dagger_hilt_example.repository.JsonPlaceholderApiConstant.WRITE_TIMEOUT
-import com.android.android_dagger_hilt_example.repository.JsonPlaceholderRepository
+import com.android.android_dagger_hilt_example.repository.JsonPlaceholderEncypherApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -69,10 +68,21 @@ object AppModule {
             .create(JsonPlaceholderApi::class.java)
     }
 
+
     @Singleton
     @Provides
-    fun provideGetPostUseCase(jsonPlaceholderRepository: JsonPlaceholderRepository): GetPostUseCase {
-        return GetPostUseCase(jsonPlaceholderRepository)
+    fun provideJsonPlaceHolderEncryptedApi(gson: Gson): JsonPlaceholderEncypherApi {
+
+        val baseHttpClient = BaseOkHttpClient(
+            connectionTimeoutSec = CONNECT_TIMEOUT,
+            readTimeoutSec = READ_TIMEOUT,
+            writeTimeoutSec = WRITE_TIMEOUT
+        ).getSecureClient()
+
+        return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson))
+            .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL).client(baseHttpClient).build()
+            .create(JsonPlaceholderEncypherApi::class.java)
     }
+
 
 }
