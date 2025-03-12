@@ -14,10 +14,10 @@ import javax.inject.Named
 
 
 @AndroidEntryPoint
-class RetrofitErrorMgmtActivity : AppCompatActivity() {
+class PostActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-    private val TAG = RetrofitErrorMgmtActivity::class.java.simpleName
+    private val TAG = PostActivity::class.java.simpleName
 
     //Field Injection
     @Inject
@@ -30,7 +30,7 @@ class RetrofitErrorMgmtActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_retrofit_error_mgmt)
+        setContentView(R.layout.activity_post)
 
         Log.d(TAG, "CIAO: $testString")
         Log.d(TAG, "CIAO: $testString2")
