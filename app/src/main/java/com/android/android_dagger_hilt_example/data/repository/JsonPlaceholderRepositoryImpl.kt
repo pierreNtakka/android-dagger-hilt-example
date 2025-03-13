@@ -1,4 +1,4 @@
-package com.android.android_dagger_hilt_example.repository
+package com.android.android_dagger_hilt_example.data.repository
 
 import com.android.android_dagger_hilt_example.model.Post
 import com.android.android_dagger_hilt_example.network.JsonPlaceholderApi

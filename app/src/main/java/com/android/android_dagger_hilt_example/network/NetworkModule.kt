@@ -59,7 +59,9 @@ object NetworkModule {
     private fun createJsonPlaceholderApi(okHttpClient: OkHttpClient): JsonPlaceholderApi {
         return Retrofit.Builder()
             .addConverterFactory(Json.asConverterFactory("application/json;".toMediaType()))
-            .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL).client(okHttpClient).build()
+            .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL)
+            .client(okHttpClient)
+            .build()
             .create(JsonPlaceholderApi::class.java)
     }
 
@@ -68,7 +70,8 @@ object NetworkModule {
             level = if (BuildConfig.DEBUG) okhttp3.logging.HttpLoggingInterceptor.Level.BODY
             else okhttp3.logging.HttpLoggingInterceptor.Level.NONE
         }
-        return OkHttpClient.Builder().addInterceptor(logging)
+        return OkHttpClient.Builder()
+            .addInterceptor(logging)
             .connectTimeout(JsonPlaceholderApiConstant.CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(JsonPlaceholderApiConstant.READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(JsonPlaceholderApiConstant.WRITE_TIMEOUT, TimeUnit.SECONDS)

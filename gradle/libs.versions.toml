@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.9.0"
 appcompat = "1.7.0"
 constraintlayout = "2.2.1"
 coreKtx = "1.15.0"
@@ -14,14 +14,18 @@ retrofit = "2.11.0"
 loggingInterceptor = "4.12.0"
 
 kotlinPlugin = "2.1.0"
-kotlinAndroidPlugin = "1.9.23"
+kotlinAndroidPlugin = "1.9.24"
+
+camera = "1.4.1"
 
 junit = "4.13.2"
 androidxExtJunit = "1.2.1"
 espressoCore = "3.6.1"
 
 
+
 [libraries]
+
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
@@ -41,9 +45,17 @@ okttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 retrofit-converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 
+
+camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "camera" }
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camera" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camera" }
+camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camera" }
+
+
 junit = { module = "junit:junit", version.ref = "junit" }
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidxExtJunit" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -61,3 +73,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 
 [bundles]
 retrofit = ["okttp-logging-interceptor", "retrofit", "retrofit-converter-kotlinx-serialization", "retrofit-converter-gson"]
+camera = ["camera-core", "camera-view", "camera-camera2", "camera-lifecycle"]

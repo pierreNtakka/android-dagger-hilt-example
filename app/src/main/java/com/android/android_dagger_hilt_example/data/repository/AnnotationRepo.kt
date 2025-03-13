@@ -1,4 +1,4 @@
-package com.android.android_dagger_hilt_example.repository
+package com.android.android_dagger_hilt_example.data.repository
 
 import javax.inject.Qualifier
 

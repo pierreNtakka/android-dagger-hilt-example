@@ -2,8 +2,8 @@ package com.android.android_dagger_hilt_example.presentation.list.uses_case
 
 import com.android.android_dagger_hilt_example.model.Post
 import com.android.android_dagger_hilt_example.network.Resource
-import com.android.android_dagger_hilt_example.repository.ClearRepository
-import com.android.android_dagger_hilt_example.repository.JsonPlaceholderRepository
+import com.android.android_dagger_hilt_example.data.repository.ClearRepository
+import com.android.android_dagger_hilt_example.data.repository.JsonPlaceholderRepository
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">android-dagger-hilt-example</string>
+    <string name="app_name">Dagger Hilt Example</string>
 
     <string name="retrofit_error_mgmt">Retrofit Error Mgmt</string>
     <string name="refresh">refresh</string>

@@ -1,7 +1,6 @@
 package com.android.android_dagger_hilt_example.di
 
 import android.content.Context
-import com.android.android_dagger_hilt_example.AndroidHiltExampleApplication
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -21,8 +20,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideApplication(@ApplicationContext app: Context): AndroidHiltExampleApplication {
-        return app as AndroidHiltExampleApplication
+    fun provideApplication(@ApplicationContext app: Context): Context {
+        return app
     }
 
     @Singleton

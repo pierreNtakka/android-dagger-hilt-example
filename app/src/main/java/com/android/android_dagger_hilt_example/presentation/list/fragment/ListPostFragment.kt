@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -24,6 +25,24 @@ import com.android.android_dagger_hilt_example.presentation.list.viewmodel.ListP
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+
+/**
+ *
+ * ActivityResultContracts.StartActivityForResult: Used to start an activity and receive a result back.
+ * ActivityResultContracts.RequestPermission: Used to request a single permission.
+ * ActivityResultContracts.RequestMultiplePermissions: Used to request multiple permissions at once.
+ * ActivityResultContracts.TakePicture: Used to capture a photo and save it to the given Uri.
+ * ActivityResultContracts.TakePicturePreview: Used to capture a photo and return it as a Bitmap.
+ * ActivityResultContracts.TakeVideo: Used to capture a video and save it to the given Uri.
+ * ActivityResultContracts.PickContact: Used to pick a contact from the contacts app.
+ * ActivityResultContracts.GetContent: Used to open a document picker to select a piece of content.
+ * ActivityResultContracts.OpenDocument: Used to open a document picker to select a document.
+ * ActivityResultContracts.OpenMultipleDocuments: Used to open a document picker to select multiple documents.
+ * ActivityResultContracts.CreateDocument: Used to create a new document.
+ *
+ * **/
+
+
 @AndroidEntryPoint
 class ListPostFragment : Fragment(), MenuProvider {
 
@@ -31,6 +50,20 @@ class ListPostFragment : Fragment(), MenuProvider {
     private val binding get() = _binding!!
 
     private val viewModel by viewModels<ListPostsViewModel>()
+
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                viewModel.onPictureSelected()
+            }
+        }
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                viewModel.onPictureSelected(it)
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,6 +116,13 @@ class ListPostFragment : Fragment(), MenuProvider {
             viewModel.createPost()
         }
 
+        binding.fabCamera.setOnClickListener {
+            viewModel.captureImage(this.cameraLauncher)
+        }
+
+        binding.fabGallery.setOnClickListener {
+            this.galleryLauncher.launch("image/*")
+        }
     }
 
 
