@@ -1,11 +1,11 @@
-package com.android.android_dagger_hilt_example.presentation.viewmodel
+package com.android.android_dagger_hilt_example.presentation.list.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.android_dagger_hilt_example.model.Post
 import com.android.android_dagger_hilt_example.network.Resource
-import com.android.android_dagger_hilt_example.presentation.uses_case.CreatePostUseCase
-import com.android.android_dagger_hilt_example.presentation.uses_case.GetPostUseCase
+import com.android.android_dagger_hilt_example.presentation.list.uses_case.CreatePostUseCase
+import com.android.android_dagger_hilt_example.presentation.list.uses_case.GetPostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

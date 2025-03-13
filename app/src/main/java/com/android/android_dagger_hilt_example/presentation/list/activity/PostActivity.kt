@@ -1,4 +1,4 @@
-package com.android.android_dagger_hilt_example.presentation.activity
+package com.android.android_dagger_hilt_example.presentation.list.activity
 
 import android.os.Bundle
 import android.util.Log

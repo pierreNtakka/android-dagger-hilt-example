@@ -1,27 +1,20 @@
-package com.android.android_dagger_hilt_example.presentation.uses_case
+package com.android.android_dagger_hilt_example.presentation.list.uses_case
 
-import com.android.android_dagger_hilt_example.model.Post
 import com.android.android_dagger_hilt_example.network.Resource
-import com.android.android_dagger_hilt_example.repository.JsonPlaceholderEncypherRepository
+import com.android.android_dagger_hilt_example.repository.ClearRepository
+import com.android.android_dagger_hilt_example.repository.JsonPlaceholderRepository
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
 
-class CreatePostUseCase @Inject constructor(private val jsonPlaceholderRepository: JsonPlaceholderEncypherRepository) {
+class GetPostUseCase @Inject constructor(@ClearRepository private val repository: JsonPlaceholderRepository) {
 
     operator fun invoke() = flow {
         try {
             emit(Resource.Loading())
-            val response =
-                jsonPlaceholderRepository.createPost(
-                    Post(
-                        body = "ciao post",
-                        title = "Titolo",
-                        userId = 1
-                    )
-                )
+            val response = repository.getPosts()
             emit(Resource.Success(data = response))
         } catch (throwable: Throwable) {
             when (throwable) {

@@ -1,4 +1,4 @@
-package com.android.android_dagger_hilt_example.presentation.fragment
+package com.android.android_dagger_hilt_example.presentation.detail.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.android.android_dagger_hilt_example.databinding.FragmentDetailPostsBinding
 import com.android.android_dagger_hilt_example.model.Post
-import com.android.android_dagger_hilt_example.presentation.viewmodel.DetailsPostViewModel
+import com.android.android_dagger_hilt_example.presentation.detail.viewmodel.DetailsPostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

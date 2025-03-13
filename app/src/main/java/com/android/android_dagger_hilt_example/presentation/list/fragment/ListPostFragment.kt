@@ -1,4 +1,4 @@
-package com.android.android_dagger_hilt_example.presentation.fragment
+package com.android.android_dagger_hilt_example.presentation.list.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,8 +19,8 @@ import androidx.navigation.fragment.findNavController
 import com.android.android_dagger_hilt_example.R
 import com.android.android_dagger_hilt_example.databinding.FragmentListPostsBinding
 import com.android.android_dagger_hilt_example.model.Post
-import com.android.android_dagger_hilt_example.presentation.fragment.adapter.PostsAdapter
-import com.android.android_dagger_hilt_example.presentation.viewmodel.ListPostsViewModel
+import com.android.android_dagger_hilt_example.presentation.list.fragment.adapter.PostsAdapter
+import com.android.android_dagger_hilt_example.presentation.list.viewmodel.ListPostsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androiddaggerhiltexample">
         <activity
-            android:name=".presentation.activity.PostActivity"
+            android:name=".presentation.list.activity.PostActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

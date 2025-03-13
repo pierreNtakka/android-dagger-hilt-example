@@ -1,9 +1,9 @@
-package com.android.android_dagger_hilt_example.presentation.viewmodel
+package com.android.android_dagger_hilt_example.presentation.detail.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.android.android_dagger_hilt_example.presentation.fragment.DetailPostFragmentArgs
+import com.android.android_dagger_hilt_example.presentation.detail.fragment.DetailPostFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

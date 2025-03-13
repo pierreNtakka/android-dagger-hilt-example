@@ -1,4 +1,4 @@
-package com.android.android_dagger_hilt_example.presentation.fragment.adapter
+package com.android.android_dagger_hilt_example.presentation.list.fragment.adapter
 
 
 import android.view.LayoutInflater

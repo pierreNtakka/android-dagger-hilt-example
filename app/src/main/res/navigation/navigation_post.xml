@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listPostFragment"
-        android:name="com.android.android_dagger_hilt_example.presentation.fragment.ListPostFragment"
+        android:name="com.android.android_dagger_hilt_example.presentation.list.fragment.ListPostFragment"
         android:label="@string/retrofit_error_mgmt"
         tools:layout="@layout/fragment_list_posts">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/detailPostFragment"
-        android:name="com.android.android_dagger_hilt_example.presentation.fragment.DetailPostFragment"
+        android:name="com.android.android_dagger_hilt_example.presentation.detail.fragment.DetailPostFragment"
         android:label="@string/retrofit_error_mgmt"
         tools:layout="@layout/fragment_detail_posts">
 

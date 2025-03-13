@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.activity.PostActivity">
+    tools:context=".presentation.list.activity.PostActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_retrofit_error_mgmt"
@@ -16,6 +16,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/navigation_retrofit_error_mgmt" />
+        app:navGraph="@navigation/navigation_post" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
