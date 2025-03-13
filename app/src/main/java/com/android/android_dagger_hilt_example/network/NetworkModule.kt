@@ -22,30 +22,9 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpLogger(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
-            else HttpLoggingInterceptor.Level.NONE
-        }
-    }
-
-    @Singleton
-    @Provides
-    fun provideSimpleOkhttpClientBuilder(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient.Builder {
-        return OkHttpClient.Builder().addInterceptor(loggingInterceptor)
-            .connectTimeout(JsonPlaceholderApiConstant.CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(JsonPlaceholderApiConstant.READ_TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(JsonPlaceholderApiConstant.WRITE_TIMEOUT, TimeUnit.SECONDS)
-    }
-
-
-    @Singleton
-    @Provides
     @ClearOkHttpClient
-    fun provideClearOkhttpClientApi(
-        okhttpClientBuilder: OkHttpClient.Builder
-    ): OkHttpClient {
-        return okhttpClientBuilder.build()
+    fun provideClearOkhttpClientApi(): OkHttpClient {
+        return provideSimpleOkhttpClientBuilder().build()
     }
 
     @Singleton
@@ -58,43 +37,41 @@ object NetworkModule {
     @Provides
     @CipherOkHttpClient
     fun provideCipherOkhttpClient(
-        okhttpClientBuilder: OkHttpClient.Builder, cipherInterceptor: EncryptionInterceptor
+        cipherInterceptor: EncryptionInterceptor
     ): OkHttpClient {
-        return okhttpClientBuilder.addInterceptor(cipherInterceptor).build()
+        return provideSimpleOkhttpClientBuilder().addInterceptor(cipherInterceptor).build()
     }
 
-    @Singleton
     @Provides
-    fun provideRetrofitBuilder(): Retrofit.Builder {
+    @Singleton
+    @ClearJsonApi
+    fun provideClearJsonApiPlaceholder(@ClearOkHttpClient okHttpClient: OkHttpClient): JsonPlaceholderApi {
+        return createJsonPlaceholderApi(okHttpClient)
+    }
+
+    @Provides
+    @Singleton
+    @CipherJsonApi
+    fun provideClearJsonApiPlaceholderEncypher(@CipherOkHttpClient okHttpClient: OkHttpClient): JsonPlaceholderApi {
+        return createJsonPlaceholderApi(okHttpClient)
+    }
+
+    private fun createJsonPlaceholderApi(okHttpClient: OkHttpClient): JsonPlaceholderApi {
         return Retrofit.Builder()
             .addConverterFactory(Json.asConverterFactory("application/json;".toMediaType()))
-            .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL)
+            .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL).client(okHttpClient).build()
+            .create(JsonPlaceholderApi::class.java)
     }
 
-
-    @Provides
-    @Singleton
-    @ClearJsonAPi
-    fun provideClearJsonApiPlaceholder(
-        retrofitBuilder: Retrofit.Builder, @ClearOkHttpClient okHttpClient: OkHttpClient
-    ): JsonPlaceholderApi {
-        return createJsonPlaceholderApi(retrofitBuilder, okHttpClient)
+    private fun provideSimpleOkhttpClientBuilder(): OkHttpClient.Builder {
+        val logging = HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) okhttp3.logging.HttpLoggingInterceptor.Level.BODY
+            else okhttp3.logging.HttpLoggingInterceptor.Level.NONE
+        }
+        return OkHttpClient.Builder().addInterceptor(logging)
+            .connectTimeout(JsonPlaceholderApiConstant.CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(JsonPlaceholderApiConstant.READ_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(JsonPlaceholderApiConstant.WRITE_TIMEOUT, TimeUnit.SECONDS)
     }
-
-    @Provides
-    @Singleton
-    @CipherJsonAPi
-    fun provideClearJsonApiPlaceholderEncypher(
-        retrofitBuilder: Retrofit.Builder, @CipherOkHttpClient okHttpClient: OkHttpClient
-    ): JsonPlaceholderApi {
-        return createJsonPlaceholderApi(retrofitBuilder, okHttpClient)
-    }
-
-    private fun createJsonPlaceholderApi(
-        retrofitBuilder: Retrofit.Builder, okHttpClient: OkHttpClient
-    ): JsonPlaceholderApi {
-        return retrofitBuilder.client(okHttpClient).build().create(JsonPlaceholderApi::class.java)
-    }
-
 
 }

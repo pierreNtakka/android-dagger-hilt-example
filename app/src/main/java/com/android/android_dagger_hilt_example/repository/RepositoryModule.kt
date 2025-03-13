@@ -1,7 +1,7 @@
 package com.android.android_dagger_hilt_example.repository
 
-import com.android.android_dagger_hilt_example.network.CipherJsonAPi
-import com.android.android_dagger_hilt_example.network.ClearJsonAPi
+import com.android.android_dagger_hilt_example.network.CipherJsonApi
+import com.android.android_dagger_hilt_example.network.ClearJsonApi
 import com.android.android_dagger_hilt_example.network.JsonPlaceholderApi
 import dagger.Module
 import dagger.Provides
@@ -17,7 +17,7 @@ object RepositoryModule {
     @Provides
     @ClearRepository
     fun provideJsonPlaceholderRepo(
-        @ClearJsonAPi jsonPlaceholderApi: JsonPlaceholderApi
+        @ClearJsonApi jsonPlaceholderApi: JsonPlaceholderApi
     ): JsonPlaceholderRepository {
         return JsonPlaceholderRepositoryImpl(jsonPlaceholderApi = jsonPlaceholderApi)
     }
@@ -27,7 +27,7 @@ object RepositoryModule {
     @Provides
     @CipherRepository
     fun provideJsonPlaceholderCipherRepo(
-        @CipherJsonAPi jsonPlaceholderApi: JsonPlaceholderApi
+        @CipherJsonApi jsonPlaceholderApi: JsonPlaceholderApi
     ): JsonPlaceholderRepository {
         return JsonPlaceholderRepositoryImpl(jsonPlaceholderApi = jsonPlaceholderApi)
     }

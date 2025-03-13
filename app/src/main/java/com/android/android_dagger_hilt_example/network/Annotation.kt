@@ -12,9 +12,9 @@ annotation class CipherOkHttpClient
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class ClearJsonAPi
+annotation class ClearJsonApi
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class CipherJsonAPi
+annotation class CipherJsonApi
 
