@@ -2,16 +2,17 @@ package com.android.android_dagger_hilt_example.network
 
 import com.android.android_dagger_hilt_example.BuildConfig
 import com.android.android_dagger_hilt_example.network.interceptor.EncryptionInterceptor
-import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -31,8 +32,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideSimpleOkhttpClientBuilder(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient.Builder {
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
+        return OkHttpClient.Builder().addInterceptor(loggingInterceptor)
             .connectTimeout(JsonPlaceholderApiConstant.CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(JsonPlaceholderApiConstant.READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(JsonPlaceholderApiConstant.WRITE_TIMEOUT, TimeUnit.SECONDS)
@@ -58,19 +58,16 @@ object NetworkModule {
     @Provides
     @CipherOkHttpClient
     fun provideCipherOkhttpClient(
-        okhttpClientBuilder: OkHttpClient.Builder,
-        chipherInterceptor: EncryptionInterceptor
+        okhttpClientBuilder: OkHttpClient.Builder, cipherInterceptor: EncryptionInterceptor
     ): OkHttpClient {
-        return okhttpClientBuilder
-            .addInterceptor(chipherInterceptor)
-            .build()
+        return okhttpClientBuilder.addInterceptor(cipherInterceptor).build()
     }
 
     @Singleton
     @Provides
-    fun provideRetrofitBuilder(gson: Gson): Retrofit.Builder {
+    fun provideRetrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(Json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
             .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL)
     }
 
@@ -79,8 +76,7 @@ object NetworkModule {
     @Singleton
     @ClearJsonAPi
     fun provideClearJsonApiPlaceholder(
-        retrofitBuilder: Retrofit.Builder,
-        @ClearOkHttpClient okHttpClient: OkHttpClient
+        retrofitBuilder: Retrofit.Builder, @ClearOkHttpClient okHttpClient: OkHttpClient
     ): JsonPlaceholderApi {
         return createJsonPlaceholderApi(retrofitBuilder, okHttpClient)
     }
@@ -89,20 +85,15 @@ object NetworkModule {
     @Singleton
     @CipherJsonAPi
     fun provideClearJsonApiPlaceholderEncypher(
-        retrofitBuilder: Retrofit.Builder,
-        @CipherOkHttpClient okHttpClient: OkHttpClient
+        retrofitBuilder: Retrofit.Builder, @CipherOkHttpClient okHttpClient: OkHttpClient
     ): JsonPlaceholderApi {
         return createJsonPlaceholderApi(retrofitBuilder, okHttpClient)
     }
 
     private fun createJsonPlaceholderApi(
-        retrofitBuilder: Retrofit.Builder,
-        okHttpClient: OkHttpClient
+        retrofitBuilder: Retrofit.Builder, okHttpClient: OkHttpClient
     ): JsonPlaceholderApi {
-        return retrofitBuilder
-            .client(okHttpClient)
-            .build()
-            .create(JsonPlaceholderApi::class.java)
+        return retrofitBuilder.client(okHttpClient).build().create(JsonPlaceholderApi::class.java)
     }
 
 

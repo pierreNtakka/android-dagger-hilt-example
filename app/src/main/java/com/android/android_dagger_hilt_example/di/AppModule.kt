@@ -44,4 +44,5 @@ object AppModule {
     fun provideGson(): Gson {
         return GsonBuilder().create()
     }
+
 }
