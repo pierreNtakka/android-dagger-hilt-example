@@ -1,5 +1,3 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
         mavenCentral()
@@ -10,7 +8,6 @@ buildscript {
         classpath(libs.navigation.safe.args.gradle.plugin)
     }
 }
-
 
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -25,5 +22,4 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.kapt) apply false
     alias(libs.plugins.jetbrains.kotlin.plugin.serializzation) apply false
     alias(libs.plugins.jetbrains.kotlin.plugin.parcelize) apply false
-
 }

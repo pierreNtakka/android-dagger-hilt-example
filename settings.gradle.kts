@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "android-dagger-hilt-example"
-include ':app'
+include(":app")
