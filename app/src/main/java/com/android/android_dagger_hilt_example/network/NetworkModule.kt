@@ -68,35 +68,37 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRefrofitBuilder(gson: Gson): Retrofit.Builder {
+    fun provideRetrofitBuilder(gson: Gson): Retrofit.Builder {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL)
     }
 
 
-    @Singleton
     @Provides
+    @Singleton
     @ClearJsonAPi
     fun provideClearJsonApiPlaceholder(
         retrofitBuilder: Retrofit.Builder,
         @ClearOkHttpClient okHttpClient: OkHttpClient
     ): JsonPlaceholderApi {
-
-        return retrofitBuilder
-            .client(okHttpClient)
-            .build()
-            .create(JsonPlaceholderApi::class.java)
+        return createJsonPlaceholderApi(retrofitBuilder, okHttpClient)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     @CipherJsonAPi
     fun provideClearJsonApiPlaceholderEncypher(
         retrofitBuilder: Retrofit.Builder,
         @CipherOkHttpClient okHttpClient: OkHttpClient
     ): JsonPlaceholderApi {
+        return createJsonPlaceholderApi(retrofitBuilder, okHttpClient)
+    }
 
+    private fun createJsonPlaceholderApi(
+        retrofitBuilder: Retrofit.Builder,
+        okHttpClient: OkHttpClient
+    ): JsonPlaceholderApi {
         return retrofitBuilder
             .client(okHttpClient)
             .build()
