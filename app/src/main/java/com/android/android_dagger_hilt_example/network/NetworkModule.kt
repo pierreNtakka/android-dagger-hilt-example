@@ -67,7 +67,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder()
-            .addConverterFactory(Json.asConverterFactory("application/json; charset=UTF8".toMediaType()))
+            .addConverterFactory(Json.asConverterFactory("application/json;".toMediaType()))
             .baseUrl(BuildConfig.JSONPLACEHOLDER_API_URL)
     }
 

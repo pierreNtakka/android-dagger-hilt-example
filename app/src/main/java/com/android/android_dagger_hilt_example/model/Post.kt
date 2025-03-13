@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Parcelize
 data class Post(
-    val body: String,
+    val body: String? = null,
     val id: Int? = null,
-    val title: String,
-    val userId: Int,
+    val title: String? = null,
+    val userId: Int? = null,
 ) : Parcelable
