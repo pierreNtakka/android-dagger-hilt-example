@@ -37,24 +37,18 @@ class ListPostsViewModel @Inject constructor(
 
     fun fetchData() {
         viewModelScope.launch {
-            getPostUseCase().collect { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        _dataFlow.value =
-                            ListPostsState.Success(list = resource.data ?: emptyList())
-                    }
+            when (val response = getPostUseCase()) {
+                is Resource.Success -> {
+                    _dataFlow.value =
+                        ListPostsState.Success(list = response.data)
+                }
 
-                    is Resource.Loading -> {
-                        _dataFlow.value = ListPostsState.Loading
-                    }
+                is Resource.ConnectionError -> {
+                    _dataFlow.value = ListPostsState.Error
+                }
 
-                    is Resource.ConnectionError -> {
-                        _dataFlow.value = ListPostsState.Error
-                    }
-
-                    is Resource.Error -> {
-                        _dataFlow.value = ListPostsState.Error
-                    }
+                is Resource.Error -> {
+                    _dataFlow.value = ListPostsState.Error
                 }
             }
         }
@@ -62,25 +56,29 @@ class ListPostsViewModel @Inject constructor(
 
     fun createPost() {
         viewModelScope.launch {
-            createPostUseCase().collect { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        fetchData()
-                    }
+            _dataFlow.value = ListPostsState.Loading
 
-                    is Resource.Loading -> {
-                        _dataFlow.value = ListPostsState.Loading
-                    }
+            val resource = createPostUseCase(
+                Post(
+                    body = "ciao post",
+                    title = "Titolo",
+                    userId = 1
+                )
+            )
+            when (resource) {
+                is Resource.Success -> {
+                    fetchData()
+                }
 
-                    is Resource.ConnectionError -> {
-                        _dataFlow.value = ListPostsState.Error
-                    }
+                is Resource.ConnectionError -> {
+                    _dataFlow.value = ListPostsState.Error
+                }
 
-                    is Resource.Error -> {
-                        _dataFlow.value = ListPostsState.Error
-                    }
+                is Resource.Error -> {
+                    _dataFlow.value = ListPostsState.Error
                 }
             }
+
         }
     }
 

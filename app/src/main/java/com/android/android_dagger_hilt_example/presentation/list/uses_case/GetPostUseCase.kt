@@ -1,9 +1,9 @@
 package com.android.android_dagger_hilt_example.presentation.list.uses_case
 
-import com.android.android_dagger_hilt_example.network.Resource
 import com.android.android_dagger_hilt_example.data.repository.ClearRepository
 import com.android.android_dagger_hilt_example.data.repository.JsonPlaceholderRepository
-import kotlinx.coroutines.flow.flow
+import com.android.android_dagger_hilt_example.model.Post
+import com.android.android_dagger_hilt_example.network.Resource
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -11,22 +11,16 @@ import javax.inject.Inject
 
 class GetPostUseCase @Inject constructor(@ClearRepository private val repository: JsonPlaceholderRepository) {
 
-    operator fun invoke() = flow {
+    suspend operator fun invoke(): Resource<List<Post>> {
         try {
-            emit(Resource.Loading())
             val response = repository.getPosts()
-            emit(Resource.Success(data = response))
-        } catch (throwable: Throwable) {
-            when (throwable) {
-                is IOException -> emit(Resource.ConnectionError(message = throwable.message))
-                is HttpException -> {
-                    emit(Resource.Error(code = throwable.code(), message = throwable.message()))
-                }
-
-                else -> {
-                    emit(Resource.Error())
-                }
-            }
+            return Resource.Success(data = response)
+        } catch (throwable: HttpException) {
+            return Resource.Error(code = throwable.code(), message = throwable.message())
+        } catch (ex: IOException) {
+            return Resource.ConnectionError(message = ex.message ?: "")
+        } catch (ex: Exception) {
+            return Resource.Error(message = ex.message ?: "")
         }
     }
 

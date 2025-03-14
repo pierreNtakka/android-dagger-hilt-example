@@ -41,8 +41,8 @@ class DetailPostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         viewModel.getValue()
+
         post?.let {
             binding.tvPostTitle.text = it.title
             binding.tvPostBody.text = it.body
